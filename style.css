@@ -1,0 +1,206 @@
+#banner {
+    text-align: center;
+    color: white;
+    width: 100%;
+    height: 9.86%;
+    position: absolute;
+
+    top: 0%;
+    left: 0%;
+
+    z-index: -1;
+
+    background-color: #706363;
+
+
+}
+
+#posts{
+    position: absolute;
+    width:70.69%;
+    height:90.14%;
+    top: 9.86%;
+    left:29.31%;
+
+    background-color: aliceblue;
+}
+#post{
+    position: absolute;
+    left: 15%;
+
+    font-size: 1.39vw;
+}
+
+#sidebox{
+    position: absolute;
+    background-color: #C4C4C4;
+
+    top:0%;
+    left: 0%;
+    height:100%;
+    width:29.31%;
+    padding: 0%;
+
+    z-index: -2;
+}
+
+#id {
+    position:absolute;
+    width: 60%;
+    height: 30%;
+    top: 30%;
+    left: 20%;
+
+    z-index: 1;
+}
+
+#feedtitle {
+    position: absolute;
+    width: 32.70%;
+    height:4.59%; 
+    top:57%;
+    left: 32.65%;
+
+    font-family: Roboto;
+    font-style: Bold;
+    font-size: 2.5vw;
+    line-height: 100%; 
+    vertical-align: Center;
+    z-index: 1;
+    color: black;
+    text-decoration: underline;
+
+    white-space: nowrap;
+}
+
+#home {
+
+    position:fixed;
+    width: 6.39%;
+    height: 7.28%;
+    top: .50%;
+    left: 1.67%;
+}
+
+#profile {
+    position: fixed;
+    width: 6.39%;
+    height: 7.28%;
+    top:.50%;
+    left:10.14%;
+}
+
+#message {
+    position: absolute;
+    width: 6.39%;
+    height: 7.28%;
+    top:.50%;
+    left: 17.78%;
+}
+
+#friends{
+    position: absolute;
+    width: 6.39%;
+    height: 7.28%;
+    top:.50%;
+    left: 26.67%;
+}
+
+#logoutbox {
+    position: absolute;
+    width: 13.47%;
+    height: 5.31%;
+    z-index: 100;
+
+    top:2.26%;
+    left:83.96%;
+
+    background-color: black;
+}
+
+#logout {
+    position: absolute;
+    width: 50%;
+    height: 5.31%;
+    left: 10%;
+    top: -70%;
+
+    font-family: Rockwell;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2.5vw;
+    font-size: 4.25vh;
+    
+
+    z-index: 100;
+    white-space: nowrap;
+
+    color: #706363;
+}
+
+#WOYM {
+    position: absolute;
+    left: 25.47%;
+    top: 11.18%;
+
+    position: absolute;
+    width: 24.24%;
+    height: 3.76%;
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 3.5vw;
+    font-size: 5.13vh;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    white-space: nowrap;
+}
+
+#postee {
+    position: absolute;
+    width: 9.24%;
+    height: 13.1%;
+    top: 16.81%;
+    left: 5.55%;
+}
+
+#username {
+    position: absolute;
+    width: 7.57%;
+    height: 2.75%;
+    top:31.07%;
+    left: 6.75%;
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 2.75vh;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+}
+
+#post-form{
+    position: absolute;
+    top:23.60%;
+    left:17.99%;
+    width:79.17%;
+    height:71.29%
+}
+#form-post{
+    width:100%;
+    height: 100%;
+    vertical-align: top;
+    word-break: break-all;
+    resize: none;
+}
+#submit{
+   width: 2.01%;
+   height: 4.13%;
+   margin-left:95.98%;
+   margin-top: .5%;
+}
