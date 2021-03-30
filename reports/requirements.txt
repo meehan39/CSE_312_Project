@@ -1,0 +1,19 @@
+Each report must answer:
+
+What does this technology (library/framework/service) accomplish for you?
+  Explain what this technology does in your project. What problems does it solve for you?
+  
+How does this technology accomplish what it does?
+  For each problem this technology solves for you, explain in detail how it solves it starting with a TCP socket connection. 
+  You must include links to any relevant documentation or code. 
+  If the technology is open-source, you must include links to the exact code that solves your problem for you.
+
+  Ex. If you use express for your web framework you must explain how express handles an HTTP request starting with a TCP connection 
+  to include how it routes requests, how headers are parsed, etc. and link to the exact code on GitHub that parses HTTP headers and routes paths. 
+  Any other express features used must also be explained and the code linked. 
+  You do not have to explain features of the library that are not used in your project.
+  
+What license(s) or terms of service apply to this technology?
+  When using technology you did not write you will be subject to certain agreements. 
+  List any licences attached to the project (Ex. MIT, Apache) and what that license means for your project. 
+  If using a service, review the terms of service and explain all the implications of these terms for your project.
