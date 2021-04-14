@@ -2,5 +2,29 @@
     <title>Home</title>
 </head>
 <body>
-    <h1>{{ username }}'s Home Page</h1>
-</body>
+
+                  <h1 align="center">{{ username }}'s Profile Page</h1>
+                  <body>
+                  <div class="container">
+                  <div class="row">
+                      <h2>Upload A Profile Picture</h2>
+                      {% if filename %}
+                          <div>
+                              <img src="{{ url_for('display_image', filename=filename) }}">
+
+                          </div>
+                      {% endif %}
+                      <form method="post" action="/home" enctype="multipart/form-data">
+                          <dl>
+                              <p>
+                                  <input type="file" name="file" class="form-control" autocomplete="off" required>
+                              </p>
+                          </dl>
+                          <p>
+                              <input type="submit" value="Submit" class="btn btn-info">
+                          </p>
+                      </form>
+                  </div>
+                  </div>
+                  </body>
+                </body>
