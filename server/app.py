@@ -5,8 +5,18 @@ from werkzeug.utils import secure_filename
 
 users = []
 
+
+
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+UPLOAD_FOLDER = r'C:\Users\jonat\Desktop\Atom Projects\Project\server\static\uploads'
+
+app.config['UPLOAD_FOLDER'] = r'C:\Users\jonat\Desktop\Atom Projects\Project\server\static\uploads'
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+
+allowed_picture_types = set(['png', 'jpg', 'jpeg', 'gif'])
+
+
 
 @app.route("/")
 def login():
@@ -18,7 +28,7 @@ def home():
     password = request.args.get('password')
 
     return render_template('home.html', username=username)
-    
+
 
 @app.route("/create")
 def create():
@@ -28,7 +38,7 @@ def create():
     username = request.args.get('username')
     password1 = request.args.get('password1')
     password2 = request.args.get('password2')
-    
+
     if not First:
         if username and password1 and password2:
             if password1 == password2 and validate_password(password1):
@@ -40,7 +50,7 @@ def create():
                 flash('Passwords do not match.','error')
         elif not username:
             flash('Please enter a valid username.','error')
-            
+
     return render_template('create.html')
 
 def validate_password(password):
@@ -51,7 +61,7 @@ def validate_password(password):
         if char.isdigit():
             digit = True
         if char.isalpha():
-            alpha = True    
+            alpha = True
     if len(password) >= 8:
         length = True
 
@@ -75,6 +85,25 @@ def chat():
 @app.route("/friends")
 def friends():
     return render_template('friends.html')
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_picture_types
+
+
+
+#saves the uploaded file to the static folder
+@app.route('/home', methods=['POST'])
+def upload_image():
+    file = request.files['file']
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        return render_template('home.html', filename=filename)
+#displays the image on the page
+@app.route('/display/<filename>')
+def display_image(filename):
+    return redirect(url_for('static', filename='uploads/' + filename), code=301)
+
 
 
 if __name__ == '__main__':

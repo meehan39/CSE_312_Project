@@ -5,8 +5,30 @@
 <body>
 <div id = "navigate" class="navigate">
     <div id = "profile_pic" class = "profile_pic">
+      {% if filename %}
+          <div>
+              <img  src="{{ url_for('display_image', filename=filename) }}"  width="220" height="230">
 
+          </div>
+      {% endif %}
     </div>
+    <body>
+    <div class="container">
+    <div class="row">
+        <h2>Upload A Profile Picture</h2>
+        <form method="post" action="/home" enctype="multipart/form-data">
+            <dl>
+                <p>
+                    <input type="file" name="file" class="form-control" autocomplete="off" required>
+                </p>
+            </dl>
+            <p>
+                <input type="submit" value="Change Picture" class="btn btn-info">
+            </p>
+        </form>
+    </div>
+    </div>
+    </body>
     <h2>Navigate:</h2>
     <form id = "feed" action = "/home">
         <input type="hidden" name="username" value={{ username }}>
