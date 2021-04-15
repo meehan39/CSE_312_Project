@@ -8,27 +8,52 @@
 
 .navigate{
     position: fixed;
-    width:15%;
+    width:17.5%;
     height:100%;
-    background-color: darkgray;
+    background-color: 706363;
     padding:1%;
     top:0%;
     left:0%;
-    color:midnightblue;
+    color:black;
     text-decoration: underline;
+    font-family: Roboto;
+    font-weight: bolder;
+
 
     text-align: center;
+
 }
+.nav_button{
+    background-color: black;
+    color:706363;
+    width: 100%;
+    height:8%;
+    font-size: larger;
+}
+
+.nav_button:hover{
+    background-color: #1a1616;
+}
+
 
 .profile_pic{
     left: 12.5%;
     position: relative;
     width: 75%;
     height: 25%;
-    background-color: black;
+    background-color: grey;
+    align-content: center;
 }
 
-.main{
-    margin-left: 15%;
-    
+img{
+    position: relative;
+    width:100%;
+    height: 100%;
 }
+
+
+.main{
+    margin-left: 50%;
+    align-content: center;  
+}
+

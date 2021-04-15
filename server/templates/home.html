@@ -5,49 +5,33 @@
 <body>
 <div id = "navigate" class="navigate">
     <div id = "profile_pic" class = "profile_pic">
-      {% if filename %}
-          <div>
-              <img  src="{{ url_for('display_image', filename=filename) }}"  width="220" height="230">
-
-          </div>
-      {% endif %}
+        {% if filename %}
+            <img  src="{{ url_for('display_image', filename=filename) }}">
+        {% else %}
+            <img src="static/uploads/default.png">
+        {% endif %}
     </div>
-    <body>
-    <div class="container">
-    <div class="row">
-        <h2>Upload A Profile Picture</h2>
-        <form method="post" action="/home" enctype="multipart/form-data">
-            <dl>
-                <p>
-                    <input type="file" name="file" class="form-control" autocomplete="off" required>
-                </p>
-            </dl>
-            <p>
-                <input type="submit" value="Change Picture" class="btn btn-info">
-            </p>
-        </form>
-    </div>
-    </div>
-    </body>
     <h2>Navigate:</h2>
     <form id = "feed" action = "/home">
         <input type="hidden" name="username" value={{ username }}>
-        <button type="submit">Feed</button>
+        <button type="submit" class="nav_button">Feed</button>
     </form>
-    <form id = "profile" action = "/profile">
-        <button type="submit">My Posts</button>
+    <form id = "profile" action = "/profile" >
+        <button type="submit" class="nav_button">My Posts</button>
     </form>
-    <form id = "chat" action = "/chat">
-        <button type="submit">Chat</button>
+    <form id = "chat" action = "/chat" >
+        <button type="submit" class="nav_button">Chat</button>
     </form>
-    <form id = "friends" action = "/friends">
-        <button type="submit">Friends</button>
+    <form id = "friends" action = "/friends" >
+        <button type="submit" class="nav_button">Friends</button>
     </form>
-    <form id = "settings" action = "/settings">
-        <button type="submit">Settings</button>
+    <form method="post" action="/home" enctype="multipart/form-data">
+        <input type="submit" value="Change Profile Picture" class="nav_button">
+        <input type="file" name="file" class="choose_file" autocomplete="off" required >
+        <input type="hidden" name="username" value = {{ username }}>
     </form>
 </div>
 <div class="main">
-    <h1 align="center">{{ username }}'s Profile Page</h1>
+    <h1>{{ username }}'s Feed</h1>
 </div>
 </body>
