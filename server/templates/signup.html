@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="mx-auto" style="width: 30%;">
+    <h1>Sign Up</h1>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="alert alert-danger" role="alert">
+        {{ messages[0] }}
+    </div>
+    {% endif %}
+    {% endwith %}
+    <form method="POST"action="/signup">
+        <div class="form-group">
+            <input type="text" class="form-control" name="email" placeholder="Email" required="required" /><br>
+            <input type="text" class="form-control" name="username" placeholder="Username" required="required" /><br>
+            <input type="password" class="form-control"name="password" placeholder="Password" required="required" /><br>
+            <input type="password" class="form-control"name="repeat_password" placeholder="Repeat Password" required="required" /><br>
+            <button type="submit" class="btn btn-primary btn-block btn-large">Sign Up</button><br>
+        </div>
+    </form>
+</div>
+{% endblock content %}
+
+
+
+<!-- <head>
+
+</head>
+<body>
+    <form id="create">
+        <div>
+            <label for="username">Username:</label>
+            <input id="username" type="text" name="username" value="">
+        </div>
+        <div>
+            <label for="password1">Password:</label>
+            <input id="password1" type="text" name="password1" value="">
+        </div>
+        <div>
+            <label for="password2">Re-enter your Password:</label>
+            <input id="password2" type="text" name="password2" value="">
+        </div>
+        <button type="submit">Create Account</button>
+    </form>
+
+</body> -->

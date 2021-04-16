@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="mx-auto" style="width: 70%;">
+    <h1>Settings</h1>
+    <form action="/" method="POST">
+        <div class="form-group">
+            <label for="changeUsername">Change Username:</label><br>
+            <input type="text" class="form-control" name="changeUsername" placeholder="New Username"/><br>
+            <label for="changePassword">Change Password:</label><br>
+            <input type="password" class="form-control" name="changePassword" placeholder="New Password"/><br>
+            <label for="updateEmail">Update Email:</label><br>
+            <input type="text" class="form-control" name="updateEmail" placeholder="New Email"><br>
+            <button type="submit" class="btn btn-primary btn-block btn-large">Save Changes</button><br>
+        </div>
+    </form>
+</div>
+{% endblock content %}
