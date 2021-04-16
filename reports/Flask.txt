@@ -1,0 +1,51 @@
+What does this technology (library/framework/service) accomplish for you?
+
+Flask accomplishes the bulk of the TCP/HTTP work on our server, parsing and sending responses for both GET and POST request.
+It also handles most of our html templating using the the Jinja2 style templates.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+How does this technology accomplish what it does?
+
+We implement the following functions/methods from the flask library:
+
+.route()
+  this method invokes the add_url_rule() with the function directly below it for the function argument. 
+  
+  add_url_rule() responds to a GET request at the specified path and then calls the specified function.
+  
+render_template()
+  Calls _render on the specified template which in turn calls render().
+  
+  render() sends an HTTP response for the requested template. render also can take additonal arguments of the form variable_name = "String".
+  it will replace the variable in the HTML template (designated by {{ variable_name }} as designated by the Jinja2 template style) with the 
+  corresponding string.
+  
+request.args.get()
+  Parses the query string in the URL and returns the value of the designated string.
+  
+ url_for()
+  Gets the url for the specified html file.
+  
+ redirect()
+  Sends an HTTP redirect response to the designated url.
+  
+ flash()
+  Adds a message to the session flashed messages. These messages can then be retreived and added to an HTML file using {{ get_flashed_messages }},
+  and a Jinja2 for loop to add all messages. flash can also take an addition aparameter to designate different kinds of messages for example 'accept'
+  and 'error'.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+What license(s) or terms of service apply to this technology?
+
+Flask operates under a three clause BSD clause to quote the official documentation this roughly means: "do whatever you want with it as long as the copyright 
+in Flask sticks around, the conditions are not modified and the disclaimer is present. Furthermore you must not use the names of the authors to promote 
+derivatives of the software without written consent."
+
+To further clarify this means that Flask is freely available to use, however one cannot redistribute Flask source code, binary forms, or documentation without
+maintating the following copyright notice: "Copyright (c) 2015 by Armin Ronacher and contributors". Since we will not be redistributing any Flask Source Code
+this wont affect our project.
+
+Additionally, we cannot use the names of the authors to promote our product without permission from the author themself. Again, since we will not be promoting
+our web app this does not apply to our project.
