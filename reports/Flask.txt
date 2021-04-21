@@ -10,30 +10,35 @@ How does this technology accomplish what it does?
 We implement the following functions/methods from the flask library:
 
 .route()
-  this method invokes the add_url_rule() with the function directly below it for the function argument. 
+
+  this method invokes add_url_rule() which links a url with a specified path with the function directly after the request route request.
   
-  add_url_rule() responds to a GET request at the specified path and then calls the specified function.
+  add_url_rule() responds to an incoming GET request at the specified path by registeting a rule, and then calls the specified function. Everytime this path is     requested in the future, the linked function will be called (https://github.com/pallets/flask/blob/master/src/flask/scaffold.py). 
+  
+  by default after_this_request() is called to link the specified URL with the function directly after route()                                                     (https://github.com/pallets/flask/blob/master/src/flask/ctx.py).
   
 render_template()
-  Calls _render on the specified template which in turn calls render().
+  Calls _render on the specified template, and then calls the Jinja2 function render(). Signals are sent before and after the template is rendered and the         rendered template is returned. and an HTTP response is issued. (https://github.com/pallets/flask/blob/master/src/flask/templating.py)
   
-  render() sends an HTTP response for the requested template. render also can take additonal arguments of the form variable_name = "String".
-  it will replace the variable in the HTML template (designated by {{ variable_name }} as designated by the Jinja2 template style) with the 
-  corresponding string.
+  render() replaces the designated variable in the template with the deignated variables.                                                                           (https://github.com/pallets/jinja/blob/master/src/jinja2/environment.py)
+  (https://jinja.palletsprojects.com/en/2.11.x/api/)
+  
+  **Flask uses context which works like a stack where the top level contains active requests and lower levels to hold these variables.
+    (https://flask.palletsprojects.com/en/0.12.x/reqcontext/)
   
 request.args.get()
-  Parses the query string in the URL and returns the value of the designated string.
+  Parses the query string in the URL and returns the value of the designated string. (https://flask.palletsprojects.com/en/1.1.x/api/#flask.Request.args)
   
  url_for()
-  Gets the url for the specified html file.
+  Gets the url for the specified html file. (https://github.com/pallets/flask/blob/master/src/flask/helpers.py)
   
  redirect()
-  Sends an HTTP redirect response to the designated url.
+  Sends an HTTP redirect response to the designated url using werkzeug RequestRedirect. (https://github.com/pallets/werkzeug/blob/master/src/werkzeug/routing.py)
   
  flash()
   Adds a message to the session flashed messages. These messages can then be retreived and added to an HTML file using {{ get_flashed_messages }},
   and a Jinja2 for loop to add all messages. flash can also take an addition aparameter to designate different kinds of messages for example 'accept'
-  and 'error'.
+  and 'error'. (https://github.com/pallets/flask/blob/master/src/flask/helpers.py)
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
