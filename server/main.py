@@ -1,8 +1,14 @@
-from flask import Flask, Blueprint, render_template, request, redirect, url_for
+# code reference: https://www.youtube.com/watch?v=rXQAKGSOcjk
+
+from flask import Flask, Blueprint, render_template, request, redirect, url_for, session
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 import os
 from . import db
+from flask_socketio import SocketIO, join_room, emit, leave_room
+from . import socketio
+# from flask_session import Session
+
 
 main = Blueprint('main', __name__)
 
@@ -17,10 +23,30 @@ def profile():
     # print(app.config['UPLOAD_FOLDER'])
     return render_template('profile.html', username=current_user.username, avatar=current_user.avatar)
 
-@main.route('/message')
+@main.route('/message_index')
 @login_required
 def messages():
-    return render_template('message.html')
+    print('messages index')
+    return render_template('message_index.html')
+
+@main.route('/message', methods=['GET', 'POST'])
+def send_message():
+    print("in send message")
+    if request.method == "POST":
+        print("recieved post")
+        username = request.form['username']
+        room = request.form['chatName']
+        session['username'] = username
+        session['chatName'] = room
+        return render_template('message.html', room=room)
+    else:
+        if session.get('username') is not None and session.get('chatName') is not None:
+            print("reloaded pge")
+            return render_template('message.html', session=session)
+        else:
+            print('nothing wa')
+            return redirect(url_for('messages'), 302)
+
 
 @main.route('/friends')
 @login_required

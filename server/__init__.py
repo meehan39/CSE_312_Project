@@ -1,8 +1,12 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_socketio import SocketIO
 
 db = SQLAlchemy()
+socketio = SocketIO()
+debug = True
+
 
 def create_app():
     app = Flask(__name__)
@@ -30,5 +34,7 @@ def create_app():
 
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
+
+    socketio.init_app(app)
 
     return app

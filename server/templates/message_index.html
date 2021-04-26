@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% block content %}
+<form method="POST" action="/message">
+    <label for="username">Enter username: </label>
+    <input type="text" id="username" name="username" placeholder="Username" required>
+    <br>
+    <label for="chatName">Enter chat name: </label>
+    <input type="text" id="chatName" name="chatName" placeholder="Chat Name" required>
+    <br>
+    <input type="submit" value="Start Chat">
+</form>
+{% endblock content %}
