@@ -11,14 +11,29 @@ We implement the following objects/functions from the flask_login library:
 
 LoginManager
     This is an object used to hold settings used for logging in.  The only attribute we are altering for this app is the .login_view field.
-    We then call the .init_app() method which sets all the configurations
+    We then call the .init_app() method which sets all the configurations.
+
+current_user
+    This is an instance of the current user of the application.  It is set by calling the get_user() method which pops the top user off of
+    a stack of users and getting the "user" attribute, which will be the current user using the app or None of they are not logged in.
 
 login_user()
-    This method takes in a user object and a boolean value to log the user in if their credentials are correct.  This method will generate
-    a random session token and set it as a cookie in the users browser.  If the remember field is set to true, the token will persist after
-    the user closes and reopens their browser.
+    This method takes in a user object and a boolean value to log the user in if their credentials are correct.  This method adds the id 
+    of the user to the session information stored in a dictionary and sets the is_authenticated field in the current_user to True.  It 
+    then will generatea random session token and set it as a cookie in the users browser.. If the remember field is set to true, the token 
+    will persist after the user closes and reopens their browser.
 
 logout_user()
+    This method takes in no parameters and logs the user out by removing them from the list of currently logged in users, setting is_authenticated
+    on current_user to False and removes the remember me cookie if it exists.
 
+login_required
+    This is a decorator used to ensure that the user is logged in before calling the actual view.  Essentially all this does is check if
+    the current_user.is_authenticated is set to True.
 
-login_required()
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+What license(s) or terms of service apply to this technology?
+
+Since Flask Login is made for use with Flask and by the same group that made Flask, the terms of use are the exact same.  As with Flask, 
+since we are not redistributing the Flask Login source code or promoting our app we are good to go.
