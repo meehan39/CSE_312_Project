@@ -1,8 +1,42 @@
 {% extends 'layout.html' %}
 {% block content %}
 <div class="mx-auto" style="width: 70%;">
-  <h1>Friends</h1>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <h1>All Registered Users</h1>
+  <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <tbody>
+             {% for student in students %}
+                <tr>
+                   <td>{{ student.username }}</td>
+                   <td>{{ student.email }}</td>
+                   <td>{{ student.avatar }}</td>
+                   <td>{{ avatar }}</td>
+                   <img src="static/uploads/{{ student.avatar }}" alt="Girl in a jacket" width="500" height="600">
+
+
+                </tr>
+             {% endfor %}
+          </tbody> -->
+
+          <table>
+  <tr>
+    <th>Profile Picture</th>
+    <th>Username</th>
+    <th>E-Mail</th>
+  </tr>
+  <tr>
+    {% for student in students %}
+    <td><img src="static/uploads/{{ student.avatar }}" alt="Girl in a jacket" width="200" height="200"></td>
+    <td>{{ student.username }}</td>
+    <td>{{ student.email }}</td>
+    <td>
+      <button type="button">Add Friend</button>
+
+    </td>
+  </tr>
+  {% endfor %}
+
+</table>
+
+
 </div>
 {% endblock content %}
-

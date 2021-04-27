@@ -48,10 +48,10 @@ def send_message():
             return redirect(url_for('messages'), 302)
 
 
-@main.route('/friends')
-@login_required
-def friends():
-    return render_template('friends.html')
+# @main.route('/friends')
+# @login_required
+# def friends():
+#     return render_template('friends.html',students = User.query.all())
 
 @main.route('/settings')
 @login_required

@@ -37,7 +37,7 @@ def signup_post():
     username = request.form.get('username')
     password = request.form.get('password')
     repeat_password = request.form.get('repeat_password')
-
+    #user_list=[]
     email_check = User.query.filter_by(email=email).first()
     username_check = User.query.filter_by(username=username).first()
 
@@ -52,11 +52,16 @@ def signup_post():
         return redirect(url_for('auth.signup'))
 
     new_user = User(email=email, username=username, password=generate_password_hash(password, method='sha256'), avatar = 'default.png')
-
     db.session.add(new_user)
     db.session.commit()
+    user_list=User.query.all()
+    print(user_list)
+    return redirect(url_for('auth.login'),)
 
-    return redirect(url_for('auth.login'))
+@auth.route('/friends')
+@login_required
+def friends():
+    return render_template('friends.html',students = User.query.all())
 
 @auth.route('/logout')
 @login_required
