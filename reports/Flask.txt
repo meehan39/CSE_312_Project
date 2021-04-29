@@ -18,7 +18,7 @@ We implement the following functions/methods from the flask library:
   by default after_this_request() is called to link the specified URL with the function directly after route()                                                     (https://github.com/pallets/flask/blob/master/src/flask/ctx.py).
   
 render_template()
-  Calls _render on the specified template, and then calls the Jinja2 function render(). Signals are sent before and after the template is rendered and the         rendered template is returned. and an HTTP response is issued. (https://github.com/pallets/flask/blob/master/src/flask/templating.py)
+  Calls _render on the specified template, and then calls the Jinja2 function render(). Signals are sent before and after the template is rendered and the         rendered template is returned. Finally an HTTP response is issued using the rendered template. (https://github.com/pallets/flask/blob/master/src/flask/templating.py)
   
   render() replaces the designated variable in the template with the deignated variables.                                                                           (https://github.com/pallets/jinja/blob/master/src/jinja2/environment.py)
   (https://jinja.palletsprojects.com/en/2.11.x/api/)
@@ -30,10 +30,10 @@ request.args.get()
   Parses the query string in the URL and returns the value of the designated string. (https://flask.palletsprojects.com/en/1.1.x/api/#flask.Request.args)
   
  url_for()
-  Gets the url for the specified html file. (https://github.com/pallets/flask/blob/master/src/flask/helpers.py)
+  Gets the url for the specified html file. (https://github.com/pallets/flask/blob/master/src/flask/helpers.py#L192)
   
  redirect()
-  Sends an HTTP redirect response to the designated url using werkzeug RequestRedirect. (https://github.com/pallets/werkzeug/blob/master/src/werkzeug/routing.py)
+  Calls werkzeug RequestRedirect. (https://github.com/pallets/werkzeug/blob/18166bfd5b38b1775dbed383a1067ae92db86782/src/werkzeug/routing.py#L265) Which in turn calls reditect() which sends an HTTP redirect response to the designated url. (https://github.com/pallets/werkzeug/blob/18166bfd5b38b1775dbed383a1067ae92db86782/src/werkzeug/utils.py#L525)
   
  flash()
   Adds a message to the session flashed messages. These messages can then be retreived and added to an HTML file using {{ get_flashed_messages }},
