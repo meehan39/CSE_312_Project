@@ -106,7 +106,7 @@ def update_last_active():
         print("minutes below")
         print(minutes)
 
-        i.last_time= hours + "hours " + minutes + " minutes ago"
+        i.last_time= hours + " hours " + minutes + " minutes ago"
         #print("object")
         #print(date_time_obj)
         #print("ten minutes ago")
