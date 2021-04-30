@@ -7,6 +7,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_socketio import SocketIO
+from flask_migrate import Migrate
+
 
 db = SQLAlchemy()
 socketio = SocketIO()
@@ -15,6 +17,8 @@ debug = True
 
 def create_app():
     app = Flask(__name__)
+
+    migrate = Migrate(app, db)
 
     app.config['SECRET_KEY'] = b'c*Lbvs2@l5GX7%3hlg'
     UPLOAD_FOLDER = './server/static/uploads'

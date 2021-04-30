@@ -7,6 +7,13 @@ import os
 from . import db
 from flask_socketio import SocketIO, join_room, emit, leave_room
 from . import socketio
+from .models import User
+
+#import datetime
+from datetime import datetime, timedelta
+#from datetime import date, datetime, timedelta
+
+#from datetime import timedelta
 # from flask_session import Session
 
 
@@ -72,3 +79,45 @@ def upload_image():
         db.session.commit()
 
     return redirect(url_for('main.profile'))
+
+@main.before_request
+def update_last_active():
+    users=User.query.all()
+    current_user.active_time = datetime.now()
+    ten_mins_ago =  datetime.now() - timedelta(minutes=10)
+    # if abs(current_user.active_time - ten_mins_ago) < timedelta(minutes=10) :
+    #     print("hello")
+    #print(current_user.active - ten_mins_ago)
+    db.session.commit()
+
+    for i in users:
+        #print(i.username)
+        #print(i.active_time)
+        #i.last_time= (datetime.now() -  datetime.strptime(i.active_time, '%Y-%m-%d %H:%M:%S.%f'))
+
+        date_time_obj = datetime.strptime(i.active_time, '%Y-%m-%d %H:%M:%S.%f')
+        time_difference= datetime.now() - date_time_obj
+        print("Difference is below")
+        print(time_difference)
+        hours=str(str(time_difference)).split(":")[0]
+        print("hours below")
+        print(hours)
+        minutes=((str(time_difference)).split(":")[1]).split(":")[0]
+        print("minutes below")
+        print(minutes)
+
+        i.last_time= hours + "hours " + minutes + " minutes ago"
+        #print("object")
+        #print(date_time_obj)
+        #print("ten minutes ago")
+        #print(ten_mins_ago)
+        #print("Difference Below")
+        #print(abs(datetime.now() - date_time_obj))
+        if abs(datetime.now() - date_time_obj) <= timedelta(minutes=10):
+            print("username below is active")
+            print(i.username)
+            i.active= "True"
+        else:
+            i.active = "False"
+
+    db.session.commit()

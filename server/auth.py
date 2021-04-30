@@ -63,6 +63,14 @@ def signup_post():
 def friends():
     return render_template('friends.html',students = User.query.all())
 
+
+# @auth.before_request
+# def check_activity():
+#     users=User.query.all()
+#     for i in users:
+#         print("here")
+#         print(i.active)
+#         return
 @auth.route('/logout')
 @login_required
 def logout():

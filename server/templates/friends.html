@@ -22,12 +22,26 @@
     <th>Profile Picture</th>
     <th>Username</th>
     <th>E-Mail</th>
+    <!-- <th>Activite Time</th> -->
+
+    <th>Active?</th>
+
+    <th>Minutes Since Active (H/M/S)</th>
+
+
   </tr>
   <tr>
     {% for student in students %}
     <td><img src="static/uploads/{{ student.avatar }}" alt="Girl in a jacket" width="200" height="200"></td>
     <td>{{ student.username }}</td>
     <td>{{ student.email }}</td>
+    <!-- <td>{{ student.active_time }}</td> -->
+    <td>{{ student.active }}</td>
+
+    <td>{{ student.last_time }}</td>
+
+
+
     <td>
       <button type="button">Add Friend</button>
 
