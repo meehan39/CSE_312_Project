@@ -1,14 +1,56 @@
 {% extends 'layout.html' %}
 {% block content %}
-<h1>Feed</h1>
-{% for post in posts %}
-<div class="py-2">
-    <div class="card p-2">
-        <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png" class="rounded float-left" style="width: 50px; height: 50px;">
-        <h5 class="card-title">{{ post.username }}</h5>
-        <h7 class="card-subtitle mb-2 text-muted">{{ post.time_posted }}</h7>
-        <p class="card-text">{{ post.content }}</p>
-    </div>
-</div>
-{% endfor %}
+<script type="text/javascript">
+$(document).ready(function() {
+    var socket = io.connect('http://127.0.0.1:5000');
+
+    $("input").change(function() {
+        id = this.id;
+        if (id.includes("lb")){
+            id = id.split("lb")[0];
+            socket.emit('like',{id: id});
+        } 
+        if (id.includes("dl")){
+            id = id.split("dl")[0];
+            socket.emit('dislike',{id: id});
+        }
+    });
+
+    socket.on("add-like", function(data){  
+        split = data["data"].split(';');
+        id = split[0];
+        likes = split[1];
+        document.getElementById(id+'likes').innerHTML="Likes: " + likes;
+    });
+
+    socket.on("new-post", function(){
+        alert("A user has made a post");
+    });
+});
+</script>
+<form action = /create>
+    <input type="submit" value="+">
+</form>
+</br>
+    
+    {% for post in posts %}
+        <div style="background-color: lightslategray;width:75%;">
+            <p style="padding: .5%;">{{ post[1] }}:</p>
+        </div>
+        <textarea readonly rows=4 style="resize: none;width:75%; background-color: aliceblue;">{{ post[0] }}</textarea>
+        <div style="display: inline-block;width: 75%;">
+            <p style="float: right;" id ="{{ post[3] }}likes" >Likes: {{ post[2] }}</p>
+            <!--button style="float: left;" id="{{post[3]}}lb" >Like</button>--->
+            <label style="float: left; padding-right: .5%;" for="{{post[3]}}lb">Like</label>
+            <input type="radio" name="like/dislike" style="float: left;" id="{{post[3]}}lb" class="db" var="ld">
+            <label style="float: left; padding-left: 1%; padding-right: .5%;" for="{{post[3]}}dl">Dislike</label>
+            <input type="radio" style="float: left;" id="{{post[3]}}dl"  class="lb" name="like/dislike" var="ld">
+        </div>
+        
+        
+        </br>
+    
+    {% endfor %}
+    
+   <!---<ul id = "posts"></ul>--->
 {% endblock content %}

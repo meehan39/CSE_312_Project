@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block content %}
+<script type="text/javascript">
+$(document).ready(function() {
+    var socket = io.connect('http://127.0.0.1:5000');
+
+    $("#postbutton").click(function() {
+        socket.emit("news");
+    });
+
+});
+
+</script>
+
+<h1>Create Post</h1>
+
+<form action='/'>
+    <textarea name="post" rows= "4"placeholder="Enter Your Post Here..." maxlength="500" style="resize: none;width:75%" required></textarea></br>
+    <input type="submit" value ="Share" id="postbutton">
+</form>
+{% endblock content %}

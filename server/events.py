@@ -1,8 +1,9 @@
 # code reference: https://www.youtube.com/watch?v=q42zgGaYYzE
 
-from flask_socketio import join_room, emit, leave_room
+from flask_socketio import SocketIO, join_room, emit, leave_room, send
 from flask import session
 from . import socketio
+from .models import Posts
 
 
 @socketio.on('join', namespace='/message')

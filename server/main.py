@@ -5,9 +5,9 @@ from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 import os
 from . import db
-from flask_socketio import SocketIO, join_room, emit, leave_room
+from flask_socketio import SocketIO, join_room, emit, leave_room, send
 from . import socketio
-from .models import User
+from .models import User, Posts
 
 #import datetime
 from datetime import datetime, timedelta
@@ -19,10 +19,55 @@ from datetime import datetime, timedelta
 
 main = Blueprint('main', __name__)
 
-@main.route('/')
+@socketio.on('like')
+def like(id):
+    post = Posts.query.get(id)
+    post.likes = post.likes + 1
+    likes = post.likes
+    db.session.commit()
+    
+    # sends id and likes so split on -
+    emit("add-like", {'data': id["id"]+ ";" + str(likes)},broadcast=True)
+
+@socketio.on('dislike')
+def like(id):
+    post = Posts.query.get(id)
+    post.likes = post.likes - 1
+    likes = post.likes
+    db.session.commit()
+    
+    # sends id and likes so split on ;
+    emit("add-like", {'data': id["id"]+ ";" + str(likes)},broadcast=True)
+
+@socketio.on('new')
+def new():
+    emit("new-post", broadcast=True)
+
+@main.route('/', methods=['GET','POST'])
 @login_required
 def index():
-    return render_template('feed.html')
+    
+    posts = []
+    post = request.args.get('post')
+    if post != None:
+        new_post = Posts(username = current_user.username, post=post, likes=0)
+        db.session.add(new_post)
+        db.session.commit()
+    
+    db_posts = Posts.query.all()
+    for post in db_posts:
+        posts.append([post.post,post.username,post.likes,post.id])
+
+    # uncomment this (one at a time) to delete posts
+    #db.session.query(Posts).delete()
+    #db.session.commit()
+
+    return render_template('feed.html',posts=reversed(posts))
+
+@main.route('/create')
+@login_required
+def create_post():
+    return render_template('create.html')
 
 @main.route('/profile')
 @login_required
@@ -48,10 +93,10 @@ def send_message():
         return render_template('message.html', room=room)
     else:
         if session.get('username') is not None and session.get('chatName') is not None:
-            print("reloaded pge")
+            #print("reloaded pge")
             return render_template('message.html', session=session)
         else:
-            print('nothing wa')
+            #print('nothing wa')
             return redirect(url_for('messages'), 302)
 
 
@@ -97,14 +142,14 @@ def update_last_active():
 
         date_time_obj = datetime.strptime(i.active_time, '%Y-%m-%d %H:%M:%S.%f')
         time_difference= datetime.now() - date_time_obj
-        print("Difference is below")
-        print(time_difference)
+        #print("Difference is below")
+        #print(time_difference)
         hours=str(str(time_difference)).split(":")[0]
-        print("hours below")
-        print(hours)
+        #print("hours below")
+        #print(hours)
         minutes=((str(time_difference)).split(":")[1]).split(":")[0]
-        print("minutes below")
-        print(minutes)
+        #print("minutes below")
+        #print(minutes)
 
         i.last_time= hours + " hours " + minutes + " minutes ago"
         #print("object")
@@ -114,8 +159,8 @@ def update_last_active():
         #print("Difference Below")
         #print(abs(datetime.now() - date_time_obj))
         if abs(datetime.now() - date_time_obj) <= timedelta(minutes=10):
-            print("username below is active")
-            print(i.username)
+            #print("username below is active")
+            #print(i.username)
             i.active= "True"
         else:
             i.active = "False"
