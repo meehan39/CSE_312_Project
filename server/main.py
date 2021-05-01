@@ -53,6 +53,7 @@ def index():
         new_post = Posts(username = current_user.username, post=post, likes=0)
         db.session.add(new_post)
         db.session.commit()
+        return(redirect())
     
     db_posts = Posts.query.all()
     for post in db_posts:
