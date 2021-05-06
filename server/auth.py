@@ -63,6 +63,10 @@ def signup_post():
 def friends():
     return render_template('friends.html',students = User.query.all())
 
+# @auth.route('/message')
+# @login_required
+# def message():
+#     return render_template('message.html')
 
 # @auth.before_request
 # def check_activity():

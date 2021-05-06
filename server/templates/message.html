@@ -1,33 +1,41 @@
 {% extends 'layout.html' %}
 {% block content %}
 <div class="mx-auto" style="width: 70%;">
-<script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+<!--script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script-->
+
+<script type="text/javascript" src="https://cdn.socket.io/3.1.3/socket.io.min.js "></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+
     <!-- code reference: https://www.youtube.com/watch?v=q42zgGaYYzE -->
 <script type="text/javascript" charset="utf-8">
-    var socket
+
 
     $(document).ready(function(){
-        socket = io.connect('http://' + document.domain + ':' + location.port + '/message');
+        var socket = io.connect('http://' + document.domain + ':' + location.port + '/message');
+
         socket.on('connect', function(){
-          socket.emit('join', {});
+            console.log("Connection happening")
+            socket.emit("User has connected");
         });
-        socket.on('status', function(chatM){
-          $('#chatBox').val($('#chatBox').val() + '<' + chatM.msg + '>\n');
-          $('#chatBox').scrollTop($('#chatBox')[0].scrollHeight);
-        });
-        socket.on('message', function(chatM){
-          $('#chatBox').val($('#chatBox').val() + chatM.msg + '\n');
-          $('#chat').scrollTop($('#chat')[0].scrollHeight);
-        });
-        $('#send').click(function(e){
-          var code = e.keyCode || e.which;
-            if (code == 13) {
-                text = $('#send').val();
-                $('#send').val('');
-                socket.emit('text', {msg: text});
-            }
-        });
+
+        socket.on('message', function(msg) {
+        console.log('about to receive message')
+        console.log(msg)
+		$("#messages").append('<li>'+msg+'</li>');
+		console.log('Received message');
+	});
+
+	    $('#submit').on('click', function() {
+		socket.send($('#send').val());
+		$('#send').val('');
+	    });
+
     });
 
 
@@ -36,10 +44,11 @@
   <h1>Messages</h1>
   <form>
       <h1>{{room}}</h1>
+      <ul id="messages"></ul>
       <textarea id="chatBox" cols="90" rows="15" placeholder="Messages will appear here" readonly></textarea>
       <br>
       <input id="send" type="text" name="message" size="95" placeholder="Type message here">
-      <input id="submit" type="button" value="Submit">
+      <button id="submit">Submit</button>
 
       <!--<button id="left" type="button" value="Leave Room"></button>-->
   </form>

@@ -83,6 +83,7 @@ def messages():
     return render_template('message_index.html')
 
 @main.route('/message', methods=['GET', 'POST'])
+@login_required
 def send_message():
     print("in send message")
     if request.method == "POST":
@@ -94,12 +95,21 @@ def send_message():
         return render_template('message.html', room=room)
     else:
         if session.get('username') is not None and session.get('chatName') is not None:
-            #print("reloaded pge")
+            print("reloaded pge")
             return render_template('message.html', session=session)
         else:
-            #print('nothing wa')
+            print('nothing wa')
             return redirect(url_for('messages'), 302)
 
+
+@socketio.on('message', namespace='/message')
+def message(msg):
+    print("in message")
+    # room_name = session.get('chatName')
+    # # username = session.get('username')
+    # emit('message', {'msg': session.get('username') + ' : ' + mesag['msg']}, room=room_name)
+    print("Message: " + msg)
+    emit(msg, broadcast=True)
 
 # @main.route('/friends')
 # @login_required
