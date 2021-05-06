@@ -13,32 +13,41 @@ We implement the following functions/methods from the flask library:
 
   this method invokes add_url_rule() which links a url with a specified path with the function directly after the request route request.
   
-  add_url_rule() responds to an incoming GET request at the specified path by registeting a rule, and then calls the specified function. Everytime this path is     requested in the future, the linked function will be called (https://github.com/pallets/flask/blob/master/src/flask/scaffold.py). 
+  add_url_rule() responds to an incoming GET request at the specified path by registeting a rule, and then calls the specified function. Everytime this path is
+  requested in the future, the linked function will be called (https://github.com/pallets/flask/blob/master/src/flask/scaffold.py#L439). 
   
-  by default after_this_request() is called to link the specified URL with the function directly after route()                                                     (https://github.com/pallets/flask/blob/master/src/flask/ctx.py).
+  by default after_this_request() is called to link the specified URL with the function directly after route()                                                    
+  (https://github.com/pallets/flask/blob/master/src/flask/ctx.py#L94).
   
 render_template()
-  Calls _render on the specified template, and then calls the Jinja2 function render(). Signals are sent before and after the template is rendered and the         rendered template is returned. Finally an HTTP response is issued using the rendered template. (https://github.com/pallets/flask/blob/master/src/flask/templating.py)
+  Calls _render on the specified template, and then calls the Jinja2 function render(). Signals are sent before and after the template is rendered and the        
+  rendered template is returned. Finally an HTTP response is issued using the rendered template.
+  (https://github.com/pallets/flask/blob/master/src/flask/templating.py#L121)
   
-  render() replaces the designated variable in the template with the deignated variables.                                                                           (https://github.com/pallets/jinja/blob/master/src/jinja2/environment.py)
+  render() replaces the designated variable in the template with the deignated variables.                                                                          
+  (https://github.com/pallets/jinja/blob/master/src/jinja2/environment.py#L1106)
   (https://jinja.palletsprojects.com/en/2.11.x/api/)
   
   **Flask uses context which works like a stack where the top level contains active requests and lower levels to hold these variables.
     (https://flask.palletsprojects.com/en/0.12.x/reqcontext/)
   
 request.args.get()
-  Parses the query string in the URL and returns the value of the designated string. (https://flask.palletsprojects.com/en/1.1.x/api/#flask.Request.args)
+  Parses the query string in the URL and returns a dict containing the keys and values. Then "gets" the value corresponding to the provided key.
+  (https://flask.palletsprojects.com/en/1.1.x/api/#flask.Request.args). Request in a werkzeug object used to represent incoming request, args is a property of
+  this object. (https://github.com/pallets/werkzeug/blob/master/src/werkzeug/wrappers/request.py#L28)
   
  url_for()
-  Gets the url for the specified html file. (https://github.com/pallets/flask/blob/master/src/flask/helpers.py#L192)
+ generates the url for a given endpoint. (https://github.com/pallets/flask/blob/master/src/flask/helpers.py#L190)
   
  redirect()
-  Calls werkzeug RequestRedirect. (https://github.com/pallets/werkzeug/blob/18166bfd5b38b1775dbed383a1067ae92db86782/src/werkzeug/routing.py#L265) Which in turn calls reditect() which sends an HTTP redirect response to the designated url. (https://github.com/pallets/werkzeug/blob/18166bfd5b38b1775dbed383a1067ae92db86782/src/werkzeug/utils.py#L525)
+  Calls werkzeug RequestRedirect. (https://github.com/pallets/werkzeug/blob/18166bfd5b38b1775dbed383a1067ae92db86782/src/werkzeug/routing.py#L265) Which in turn
+  calls reditect() which sends an HTTP redirect response to the designated url.
+  (https://github.com/pallets/werkzeug/blob/18166bfd5b38b1775dbed383a1067ae92db86782/src/werkzeug/utils.py#L525)
   
  flash()
   Adds a message to the session flashed messages. These messages can then be retreived and added to an HTML file using {{ get_flashed_messages }},
   and a Jinja2 for loop to add all messages. flash can also take an addition aparameter to designate different kinds of messages for example 'accept'
-  and 'error'. (https://github.com/pallets/flask/blob/master/src/flask/helpers.py)
+  and 'error'. (https://github.com/pallets/flask/blob/master/src/flask/helpers.py#L363)
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
