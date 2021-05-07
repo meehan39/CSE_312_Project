@@ -1,3 +1,40 @@
-Socket.on means that we are listening for a certain event, and the connection event happens when you first connect to the server.
-Once that happens, it calls the callback function, and in that function, the send is going to send to the server that the use has connected.
-The server is going to connect then send that message to everyone.
+What does this technology (library/framework/service) accomplish for you?
+
+Socket-io is a javascript library that offers real-time communication between clients and servers through the triggering of events.
+The server can talk to the clients and vice versa.
+Flask-socketio allows for the integration of the socketio library with the Flask framework. It references the python-socketio library which implements
+integrations of socketio client and server with python.
+This real time communication allows users to communicate with each other (whether it be through chat or posts) live.
+
+
+
+How does this technology accomplish what it does?
+
+emit()
+    This method sends a message under a pre-set or custom event name to all connected clients.
+    The emit() parameters takes the event the user wants to send out, and a dictionary data in JSON form.
+    The event payload can be represented as a JSON blob. Because this function receives data from the client
+    it can only be called from a socketio event handler.
+    (https://github.com/miguelgrinberg/Flask-SocketIO/blob/master/flask_socketio/__init__.py L#403-463)
+
+
+SocketIO
+  - before a socket makes the connection between the server and the client, it performs an HTTP handshake.
+
+  .on()
+
+    Socketio.on is an event emitter that sends and receives messages from the server. The socket waits for a request from the client. The server
+    handles these event request similar to how flask handles routes. The server is going to connect then send that message to everyone.
+    As its parameters, it takes the name of an event and a namespace.
+    Flask_socketio creates a server-side event handler and sends out connection, disconnection, and other event requests to the client. It can also
+    send out messages using the emit function(explained above).
+    (https://github.com/miguelgrinberg/Flask-SocketIO/blob/master/flask_socketio/__init__.py L#260-292)
+
+  .init_app()
+
+    init_app creates a flask_socketio server. It takes an instance of a socketio app and initilizes it. This replaces Flask's standard app.run(app) and
+    introduces SocketIO to the application.
+    This method of initializing is being used instead of socketio.run(app) because init_app() allows for an sqlite3 object instantiation and configuration of
+    the database without an app object.
+    (https://github.com/miguelgrinberg/Flask-SocketIO/blob/master/flask_socketio/__init__.py L#193-258)
+    (https://flask.palletsprojects.com/en/1.1.x/extensiondev/ Section: 'The Extension Code')

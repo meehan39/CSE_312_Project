@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 import os
 from . import db
-from flask_socketio import SocketIO, join_room, emit, leave_room, send
+from flask_socketio import emit
 from . import socketio
 from .models import User, Posts, Chat
 
