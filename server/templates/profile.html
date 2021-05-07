@@ -1,5 +1,22 @@
 {% extends 'layout.html' %}
 {% block content %}
+<script type="text/javascript">
+  $(document).ready(function() {
+      var socket = io.connect('http://127.0.0.1:5000');
+  
+      socket.on('received', function(data){
+        data = data['data']
+        arr = data.split(';')
+        self = arr[0]
+        other = arr[1]
+
+        if ('{{ username }}' == self) {
+          alert(other + ' sent you a message, go to the Users tab to respond!')
+        }
+      })
+      
+  });
+  </script>
   <img src="static/uploads/{{ avatar }}" class="rounded float-left" style="width: 200px; height: 200px;">
   <h1>{{ username }}</h1>
   <form method="post" action="/upload-image" enctype="multipart/form-data">

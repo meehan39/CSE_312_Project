@@ -58,10 +58,7 @@ def signup_post():
     print(user_list)
     return redirect(url_for('auth.login'),)
 
-@auth.route('/friends')
-@login_required
-def friends():
-    return render_template('friends.html',students = User.query.all())
+
 
 # @auth.route('/message')
 # @login_required

@@ -1,5 +1,22 @@
 {% extends 'layout.html' %}
 {% block content %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        var socket = io.connect('http://127.0.0.1:5000');
+    
+        socket.on('received', function(data){
+          data = data['data']
+          arr = data.split(';')
+          self = arr[0]
+          other = arr[1]
+  
+          if ('{{ username }}' == self) {
+            alert(other + ' sent you a message, go to the Users tab to respond!')
+          }
+        })
+        
+    });
+</script>
 <div class="mx-auto" style="width: 70%;">
     <h1>Settings</h1>
     <form action="/" method="POST">

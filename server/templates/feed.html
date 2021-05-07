@@ -26,6 +26,17 @@ $(document).ready(function() {
     socket.on("new-post", function(){
         alert("A user has made a post");
     });
+
+    socket.on('received', function(data){
+        data = data['data']
+        arr = data.split(';')
+        self = arr[0]
+        other = arr[1]
+
+        if ('{{ username }}' == self) {
+          alert(other + ' sent you a message, go to the Users tab to respond!')
+        }
+    })
 });
 </script>
 <form action = /create>
@@ -41,10 +52,10 @@ $(document).ready(function() {
         <div style="display: inline-block;width: 75%;">
             <p style="float: right;" id ="{{ post[3] }}likes" >Likes: {{ post[2] }}</p>
             <!--button style="float: left;" id="{{post[3]}}lb" >Like</button>--->
-            <label style="float: left; padding-right: .5%;" for="{{post[3]}}lb">Like</label>
-            <input type="radio" name="like/dislike" style="float: left;" id="{{post[3]}}lb" class="db" var="ld">
-            <label style="float: left; padding-left: 1%; padding-right: .5%;" for="{{post[3]}}dl">Dislike</label>
-            <input type="radio" style="float: left;" id="{{post[3]}}dl"  class="lb" name="like/dislike" var="ld">
+            <label style="float: left; padding-right: .5%;" for="{{ post[3] }}lb">Like</label>
+            <input type="radio" name="like/dislike" style="float: left;" id="{{ post[3] }}lb" class="db" var="ld">
+            <label style="float: left; padding-left: 1%; padding-right: .5%;" for="{{ post[3] }}dl">Dislike</label>
+            <input type="radio" style="float: left;" id="{{ post[3] }}dl"  class="lb" name="like/dislike" var="ld">
         </div>
         
         
@@ -52,5 +63,4 @@ $(document).ready(function() {
     
     {% endfor %}
     
-   <!---<ul id = "posts"></ul>--->
 {% endblock content %}

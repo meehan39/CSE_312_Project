@@ -1,28 +1,30 @@
 {% extends 'layout.html' %}
 {% block content %}
+<script type="text/javascript">
+  $(document).ready(function() {
+      var socket = io.connect('http://127.0.0.1:5000');
+  
+      socket.on('received', function(data){
+        data = data['data']
+        arr = data.split(';')
+        self = arr[0]
+        other = arr[1]
+
+        if ('{{ username }}' == self) {
+          alert(other + ' sent you a message, go to the Users tab to respond!')
+        }
+      })
+      
+  });
+</script>
 <div class="mx-auto" style="width: 70%;">
   <h1>All Registered Users</h1>
-  <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  <tbody>
-             {% for student in students %}
-                <tr>
-                   <td>{{ student.username }}</td>
-                   <td>{{ student.email }}</td>
-                   <td>{{ student.avatar }}</td>
-                   <td>{{ avatar }}</td>
-                   <img src="static/uploads/{{ student.avatar }}" alt="Profile Picture" width="500" height="600">
-
-
-                </tr>
-             {% endfor %}
-          </tbody> -->
 
           <table>
   <tr>
     <th>Profile Picture</th>
     <th>Username</th>
     <th>E-Mail</th>
-    <!-- <th>Activite Time</th> -->
 
     <th>Active?</th>
 
@@ -35,7 +37,7 @@
     <td><img src="static/uploads/{{ student.avatar }}" alt="Profile Picture" width="100" height="100"></td>
     <td>{{ student.username }}</td>
     <td>{{ student.email }}</td>
-    <!-- <td>{{ student.active_time }}</td> -->
+
     <td>{{ student.active }}</td>
 
     <td>{{ student.last_time }}</td>
@@ -43,8 +45,10 @@
 
 
     <td>
-      <button type="button">Add Friend</button>
-
+      <form action="/messages">
+        <input type='hidden' name='username' value='{{ student.username }}'>
+        <button type="submit" >Message</button>
+      </form>
     </td>
   </tr>
   {% endfor %}
