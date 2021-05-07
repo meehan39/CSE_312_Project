@@ -11,9 +11,7 @@ from .models import User, Posts
 
 #import datetime
 from datetime import datetime, timedelta
-#from datetime import date, datetime, timedelta
 
-#from datetime import timedelta
 # from flask_session import Session
 
 
@@ -25,7 +23,7 @@ def like(id):
     post.likes = post.likes + 1
     likes = post.likes
     db.session.commit()
-    
+
     # sends id and likes so split on -
     emit("add-like", {'data': id["id"]+ ";" + str(likes)},broadcast=True)
 
@@ -35,7 +33,7 @@ def like(id):
     post.likes = post.likes - 1
     likes = post.likes
     db.session.commit()
-    
+
     # sends id and likes so split on ;
     emit("add-like", {'data': id["id"]+ ";" + str(likes)},broadcast=True)
 
@@ -46,7 +44,7 @@ def new():
 @main.route('/', methods=['GET','POST'])
 @login_required
 def index():
-    
+
     posts = []
     post = request.args.get('post')
     if post != None:
@@ -54,7 +52,7 @@ def index():
         db.session.add(new_post)
         db.session.commit()
         return(redirect(''))
-    
+
     db_posts = Posts.query.all()
     for post in db_posts:
         posts.append([post.post,post.username,post.likes,post.id])

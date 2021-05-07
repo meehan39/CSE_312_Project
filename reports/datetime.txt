@@ -1,0 +1,40 @@
+Datetime Module
+
+What does this technology (library/framework/service) accomplish for you?
+
+	The datetime module allows me to track the current time it is when a user makes a request to the server and based on that I can tell that a user
+  is online or offline if they have made a request within the last ten minutes.
+
+
+How does this technology accomplish what it does?
+
+The Following objects/functions were implemented from the Datetime Module:
+
+	The datetime module works in that it follows the gregorian calendar which is the solar calendar used by most of the world and tracks the current date.
+
+In the source code, the following function is what keeps track of the current date:
+	https://github.com/python/cpython/blob/main/Lib/datetime.py#L88
+
+
+now():
+	This function returns the current local date and time. It also takes an optional timezone parameter but if this second parameter is unspecified
+  it uses the local time zone.
+
+https://github.com/python/cpython/blob/main/Lib/datetime.py#L1696
+
+
+strptime():
+	This function returns a string which represents the date and the time in a specific format. It takes a datetime object as the first
+  parameter and the format string is the second parameter
+https://github.com/python/cpython/blob/6fdc4d37f3fdbc1bd51f841be6e5e4708a3b8798/Lib/datetime.py#L1948
+
+Class timedelta:
+	Returns a duration representing the difference between two time instances or date instances with millisecond precision. Addition and/or subtraction can be done.
+
+https://github.com/python/cpython/blob/6fdc4d37f3fdbc1bd51f841be6e5e4708a3b8798/Lib/datetime.py#L442
+
+
+What license(s) or terms of service apply to this technology?
+
+  Accoirding to documentation on python.org, if I bundle python with my application "You must retain all copyright notices found in the code you are redistributing and include a
+  copy of the PSF License and all of the other licenses in the Python "license stack" with the software distribution."
