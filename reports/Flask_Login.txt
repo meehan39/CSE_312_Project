@@ -11,25 +11,36 @@ We implement the following objects/functions from the flask_login library:
 
 LoginManager
     This is an object used to hold settings used for logging in.  The only attribute we are altering for this app is the .login_view field.
+    (Source: login_manager.py Line 30, https://github.com/maxcountryman/flask-login/blob/c77ba6b12ef5e3045df054cf8bf2d61c4d83f54f/flask_login/login_manager.py#L30)
     We then call the .init_app() method which sets all the configurations.
+    (Source: login_manager.py Line 105, https://github.com/maxcountryman/flask-login/blob/c77ba6b12ef5e3045df054cf8bf2d61c4d83f54f/flask_login/login_manager.py#L105)
 
 current_user
     This is an instance of the current user of the application.  It is set by calling the get_user() method which pops the top user off of
-    a stack of users and getting the "user" attribute, which will be the current user using the app or None of they are not logged in.
+    a stack of users and getting the "user" attribute, which will be the current user using the app or None of they are not logged in.  It then
+    calls the _load_user() function which gets all the information about the user including their user id and authentication token, which it 
+    will search for in the request headers.
+    (Source: utils.py Line 26, https://github.com/maxcountryman/flask-login/blob/main/flask_login/utils.py#L26)
+    (Source: utils.py Line 347, https://github.com/maxcountryman/flask-login/blob/c77ba6b12ef5e3045df054cf8bf2d61c4d83f54f/flask_login/utils.py#L347)
+    (Source: login_manager.py Line 310, https://github.com/maxcountryman/flask-login/blob/c77ba6b12ef5e3045df054cf8bf2d61c4d83f54f/flask_login/login_manager.py#L310)
 
 login_user()
     This method takes in a user object and a boolean value to log the user in if their credentials are correct.  This method adds the id 
     of the user to the session information stored in a dictionary and sets the is_authenticated field in the current_user to True.  It 
-    then will generatea random session token and set it as a cookie in the users browser.. If the remember field is set to true, the token 
+    then will generate a random session token and set it as a cookie in the users browser.  If the remember field is set to true, the token 
     will persist after the user closes and reopens their browser.
+    (Source: utils.py Line 145, https://github.com/maxcountryman/flask-login/blob/c77ba6b12ef5e3045df054cf8bf2d61c4d83f54f/flask_login/utils.py#L145)
 
 logout_user()
     This method takes in no parameters and logs the user out by removing them from the list of currently logged in users, setting is_authenticated
     on current_user to False and removes the remember me cookie if it exists.
+    (Source: utils.py Line 195, https://github.com/maxcountryman/flask-login/blob/c77ba6b12ef5e3045df054cf8bf2d61c4d83f54f/flask_login/utils.py#L195)
 
 login_required
     This is a decorator used to ensure that the user is logged in before calling the actual view.  Essentially all this does is check if
-    the current_user.is_authenticated is set to True.
+    the current_user.is_authenticated is set to True.  If so, the page will be displayed.  If not, the .unauthorized() function is called and
+    the user will be redirected to the login page.
+    (Source: utils.py Line 234, https://github.com/maxcountryman/flask-login/blob/c77ba6b12ef5e3045df054cf8bf2d61c4d83f54f/flask_login/utils.py#L234)
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 

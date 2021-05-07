@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% block content %}
+<script type="text/javascript">
+$(document).ready(function() {
+    var socket = io.connect('http://127.0.0.1:5000');
+
+    $("#sendbutton").click(function() {
+        message = $('#chat').val();
+        socket.emit("message", {'data':message + ';' + '{{ user1 }}' + ';' + '{{ user2 }}' + ';' + '{{ sender }}'});
+        $('#chat').val('')
+
+    });
+
+    socket.on('{{ user1 }}{{ user2 }}', function(message){
+        
+        message=message['message'];
+        arr = message.split(';');
+        sender = arr.pop();
+        mess = arr.join(';');
+        
+        if($('#chatBox').attr('placeholder') == "You and " + "{{ username }}" + " havent chatted yet!\nWhy not send them a message?"){
+            $('#chatBox').attr('placeholder', sender + ': ' + mess +'\n')
+        }
+        else{
+            $('#chatBox').attr('placeholder', function(){
+                return $(this).attr('placeholder') + sender + ': ' + mess +  '\n';
+            });
+        }
+    });  
+});
+</script>
+    <h1>Chatting with {{ username }}...</h1>
+    <textarea id="chatBox" cols="90" rows="15" style="resize: none;" placeholder='{{ history }}' readonly></textarea>
+    
+    <div>
+        <input type = 'hidden' name='username' value='{{ username }}'>
+        <input type='text' id ='chat' name='message' placeholder="Type message here">
+        <button id='sendbutton' type='submit'></buttonid>Send</button> 
+    </div>
+{% endblock content %}
