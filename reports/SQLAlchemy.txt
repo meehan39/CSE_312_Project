@@ -1,0 +1,113 @@
+What does this technology (library/framework/service) accomplish for you?
+
+The SQLAlchemy class is used to integrate Flask apps with an SQL server.  It provides access to all SQLAlchemy functions that easily allows
+us to query and insert to the database.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+How does this technology accomplish what it does?
+
+We implement the following functions/methods from the SQLAlchemy library:
+
+SQLAlchemy
+    This class is used to instantiate an instance of an SQLAlchemy object, which is the equivelent to connecting to an SQL server.  It will
+    allow us to call the functions necessary to create, query, and delete entries from the database.
+    (Source: __init__.py Line 647, https://github.com/pallets/flask-sqlalchemy/blob/126f998c69f719299cc6d874601f8f4ffb0d4714/src/flask_sqlalchemy/__init__.py#L647)
+
+.init_app()
+    This function initializes the settings for the SQLAlchemy object and connects it with the app by taking in the app parameter.  It checks to
+    see if a database uri has been declared in the app and throws an error if it is not, then sets some default database values in the app.
+    It also declares a function to shut down the database if necessary.
+    (Source: __init__.py Line 844, https://github.com/pallets/flask-sqlalchemy/blob/126f998c69f719299cc6d874601f8f4ffb0d4714/src/flask_sqlalchemy/__init__.py#L844)
+
+.session
+    This variable is used to hold a scoped_session object, which provides scoping management of normal session objects.
+    (Source: sqlalchemy/orm/scoping.py line 63)
+        class scoped_session(object):
+            """Provides scoped management of :class:`.Session` objects.
+
+            See :ref:`unitofwork_contextual` for a tutorial.
+
+            """
+
+            session_factory = None
+            """The `session_factory` provided to `__init__` is stored in this
+            attribute and may be accessed at a later time.  This can be useful when
+            a new non-scoped :class:`.Session` or :class:`_engine.Connection` to the
+            database is needed."""
+    (/Source)
+
+    .add()
+        This method takes an object as a parameter and adds it to the current session
+        (Source: sqlalchemy/orm/session.py Line 2509)
+            def add(self, instance, _warn=True):
+                """Place an object in the ``Session``.
+
+                Its state will be persisted to the database on the next flush
+                operation.
+
+                Repeated calls to ``add()`` will be ignored. The opposite of ``add()``
+                is ``expunge()``.
+
+                """
+                if _warn and self._warn_on_events:
+                    self._flush_warning("Session.add()")
+
+                try:
+                    state = attributes.instance_state(instance)
+                except exc.NO_STATE as err:
+                    util.raise_(
+                        exc.UnmappedInstanceError(instance),
+                        replace_context=err,
+                    )
+
+                self._save_or_update_state(state)
+        (/Source)
+
+    .commit()
+        This function saves all of the changes made to the database made by the session to the actual database itself as an SQL transaction.
+        (Source: sqlalchemy/orm/session.py Line 1389)
+            def commit(self):
+                """Flush pending changes and commit the current transaction.
+
+                If no transaction is in progress, the method will first
+                "autobegin" a new transaction and commit.
+
+                If :term:`1.x-style` use is in effect and there are currently
+                SAVEPOINTs in progress via :meth:`_orm.Session.begin_nested`,
+                the operation will release the current SAVEPOINT but not commit
+                the outermost database transaction.
+
+                If :term:`2.0-style` use is in effect via the
+                :paramref:`_orm.Session.future` flag, the outermost database
+                transaction is committed unconditionally, automatically releasing any
+                SAVEPOINTs in effect.
+
+                When using legacy "autocommit" mode, this method is only
+                valid to call if a transaction is actually in progress, else
+                an error is raised.   Similarly, when using legacy "subtransactions",
+                the method will instead close out the current "subtransaction",
+                rather than the actual database transaction, if a transaction
+                is in progress.
+
+                .. seealso::
+
+                    :ref:`session_committing`
+
+                    :ref:`unitofwork_transaction`
+
+                """
+                if self._transaction is None:
+                    if not self._autobegin():
+                        raise sa_exc.InvalidRequestError("No transaction is begun.")
+
+                self._transaction.commit(_to_root=self.future)
+        (/Source)
+    
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+What license(s) or terms of service apply to this technology?
+
+SQLAlchemy is distributed under the MIT License, which essentially means that any one is free to use it, as long as it is not altered in
+any way.  This includes proprietary software that is not necessarily open-sourced.
+
