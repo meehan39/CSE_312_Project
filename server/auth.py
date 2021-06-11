@@ -37,7 +37,6 @@ def signup_post():
     username = request.form.get('username')
     password = request.form.get('password')
     repeat_password = request.form.get('repeat_password')
-    #user_list=[]
     email_check = User.query.filter_by(email=email).first()
     username_check = User.query.filter_by(username=username).first()
 
@@ -58,20 +57,6 @@ def signup_post():
     print(user_list)
     return redirect(url_for('auth.login'),)
 
-
-
-# @auth.route('/message')
-# @login_required
-# def message():
-#     return render_template('message.html')
-
-# @auth.before_request
-# def check_activity():
-#     users=User.query.all()
-#     for i in users:
-#         print("here")
-#         print(i.active)
-#         return
 @auth.route('/logout')
 @login_required
 def logout():
