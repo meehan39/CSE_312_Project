@@ -9,12 +9,6 @@ from .models import User, Posts, Chat
 
 from datetime import datetime, timedelta
 
-<<<<<<< HEAD
-# from flask_session import Session
-=======
->>>>>>> 9a9f1c64de0dfb88438ea05ad91aa1e1f8465f76
-
-
 main = Blueprint('main', __name__)
 
 
@@ -45,12 +39,6 @@ def new():
 @main.route('/', methods=['GET','POST'])
 @login_required
 def index():
-<<<<<<< HEAD
-
-=======
-    #db.create_all()
-    
->>>>>>> 9a9f1c64de0dfb88438ea05ad91aa1e1f8465f76
     posts = []
     post = request.args.get('post')
     if post != None:
@@ -118,10 +106,10 @@ def sendmessage(data):
     else:
         users.history = users.history + sender + ': ' + message +  '\n'
         db.session.commit()
-    
+
     if (user1 != sender):
         receiver = user1
-    else: 
+    else:
         receiver = user2
 
     emit('received',{'data':receiver + ';' + sender}, broadcast=True)
